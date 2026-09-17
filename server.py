@@ -54,7 +54,7 @@ def secret_page():
 		history = history
 	)
 
-@app.route("/changetext", methods = ["POST"])
+@app.route("/changetext1", methods = ["POST"])
 def change_text():
 	text = request.form["text"].lower()
 	if "fdp" in text:
