@@ -74,7 +74,8 @@ def change_text():
 	if minutes_since_last_change() >= cooldown_minutes and len(request.form["text"]) > 1:
 		kv_bridge.set_text_and_update_time(request.form["text"])
 	
-	return redirect("/karl_marx_very_secret_page")
+	#return redirect("/karl_marx_very_secret_page")
+	return redirect("https://www.youtube.com/watch?v=QDia3e12czc&pp=ygUebmV2ZXIgZ29ubmEgZ2l2ZSB5b3UgdXAgbm8gYWRz0gcJCSQMAYcqIYzv")
 
 if __name__ == "__main__":
 	app.run(port = 1234, debug = True)
