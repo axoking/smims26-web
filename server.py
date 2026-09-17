@@ -15,6 +15,8 @@ else:
 
 default_text = "Griechischer Wein ist so wie das Blut der Erde"
 
+invalid_chars = ("\u200b", "𐊠", "𝖿", "D")
+
 if "KV_URL" in environ:
 	kv_bridge = kv_redis.Bridge(default_text)
 else:
@@ -64,8 +66,10 @@ def change_text():
 		return "Die FDP ist hier unerwünscht! Wir haben Mitarbeiter zu deinem Haus geschickt die dich beseitigen werden"
 	elif "afd" in text:
 		return "Das hier ist Münster!!! So eine blaue Scheiße wollen wir hier nicht"
-	elif "\u200b" in text:
-		return "solche Tricks funktionieren hier nicht!!"
+	
+	for c in invalid_chars:
+		if c in text:
+			return "solche Tricks funktionieren hier nicht!!"
 
 	if minutes_since_last_change() >= cooldown_minutes and len(request.form["text"]) > 1:
 		kv_bridge.set_text_and_update_time(request.form["text"])
