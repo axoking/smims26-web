@@ -15,7 +15,7 @@ else:
 
 default_text = "Griechischer Wein ist so wie das Blut der Erde"
 
-invalid_chars = ("\u200b", "𐊠", "𝖿", "D")
+invalid_chars = ("\u200b", "\u200c", "\u200d", "\u00ad", "\u2060", "\u2063", "\u3164", "\u2800", "\ufeff", "𐊠", "𝖿", "D")
 
 if "KV_URL" in environ:
 	kv_bridge = kv_redis.Bridge(default_text)
