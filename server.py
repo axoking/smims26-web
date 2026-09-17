@@ -56,6 +56,9 @@ def secret_page():
 
 @app.route("/changetext1", methods = ["POST"])
 def change_text():
+	if request.form["control"] != "fuckbots":
+		return "fick dich"
+
 	text = request.form["text"].lower()
 	if "fdp" in text:
 		return "Die FDP ist hier unerwünscht! Wir haben Mitarbeiter zu deinem Haus geschickt die dich beseitigen werden"
