@@ -27,7 +27,7 @@ class Bridge:
 		self.rd.set(_key_last_change, str(time.time()))
 
 		now = datetime.now()
-		dt = now.strftime("%d.%m.%Y, %H:%M")
+		dt = now.strftime("%d.%m.%Y, %H:%M:%S")
 		history = self.rd.get(_key_history).decode()
 		history += f"[{dt}] {text}\n"
 		self.rd.set(_key_history, history)
