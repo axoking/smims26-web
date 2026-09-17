@@ -4,6 +4,8 @@ from math import floor
 from os import environ
 import kv_redis
 import kv_dummy
+import db_postgres
+import db_dummy
 import redis
 
 app = Flask(__name__)
@@ -21,6 +23,11 @@ else:
 	print("Using dummy KV")
 	kv_bridge = kv_dummy.Bridge(default_text)
 
+if "DB_URL" in environ:
+	db = db_postgres.Database()
+else:
+	db = db_dummy.Database()
+
 cooldown_minutes = 5
 
 def minutes_since_last_change():
@@ -37,7 +44,8 @@ def newsletter_signup():
 	if request.form["email"] == karl_mail:
 		return redirect("/karl_marx_very_secret_page")
 
-	return "Ein unerwarteter Fehler ist aufgetreten!!"
+	db.add_subscriber(request.form["email"])
+	return "Sie wurden erfolgreich zum E-Mail-Verteiler hinzugefügt!"
 
 @app.route("/karl_marx_very_secret_page")
 def secret_page():
@@ -61,8 +69,13 @@ def change_text():
 
 	if minutes_since_last_change() >= cooldown_minutes and len(request.form["text"]) > 1:
 		kv_bridge.set_text_and_update_time(request.form["text"])
+		db.add_text(request.form["text"])
 	
 	return redirect("/karl_marx_very_secret_page")
+
+@app.route("/secret_history")
+def history():
+	return render_template("history.html", history=db.text_history())
 
 if __name__ == "__main__":
 	app.run(port = 1234, debug = True)

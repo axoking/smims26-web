@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Text-Archiv</title>
+</head>
+<body>
+	<p>
+		<a href="/karl_marx_very_secret_page">Zurück</a>
+	</p>
+
+	<ul>
+		{% for text in history %}
+		<li>{{text}}</li>
+		{% endfor %}
+	</ul>
+</body>
+</html>
